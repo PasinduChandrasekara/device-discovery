@@ -14,14 +14,12 @@ import java.io.IOException;
 @Service
 public class QRCodeService {
 
-    private byte[] getQRCodeImage(JSONObject source, int width, int height) throws WriterException, IOException {
+    public byte[] getQRCodeImage(JSONObject source, int width, int height) throws WriterException, IOException {
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(source.toString(), BarcodeFormat.QR_CODE, width, height);
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
-        byte[] pngData = pngOutputStream.toByteArray();
-        return pngData;
-
+        return pngOutputStream.toByteArray();
     }
 }

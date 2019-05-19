@@ -1,12 +1,14 @@
 package com.liquid.devicediscovery.controller;
 
+import com.google.zxing.WriterException;
 import com.liquid.devicediscovery.domain.Device;
 import com.liquid.devicediscovery.service.DeviceManagementService;
+import com.liquid.devicediscovery.service.QRCodeService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class DeviceController {
 
     @Autowired
     DeviceManagementService deviceManagementService;
+
+    @Autowired
+    QRCodeService qrCodeService;
 
     @PostMapping
     public Device addDevice(@RequestBody Device device) {
@@ -38,14 +43,16 @@ public class DeviceController {
         return devices;
     }
 
-    @GetMapping
-    public void getAllDevices(@RequestParam String subnet) throws IOException {
-        int timeout=1000;
-        for (int i=1;i<255;i++){
-            String host=subnet + "." + i;
-            if (InetAddress.getByName(host).isReachable(timeout)){
-                System.out.println(host + " is reachable");
-            }
+    @GetMapping("/register")
+    public byte[] getRegisterationCode() {
+        byte[] qrCode = null;
+        try {
+            qrCode = qrCodeService.getQRCodeImage(new JSONObject(), 100, 250);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return qrCode;
     }
 }

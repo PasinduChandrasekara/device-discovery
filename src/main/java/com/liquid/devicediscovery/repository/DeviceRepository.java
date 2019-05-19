@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface DeviceRepository extends CrudRepository<Device, String> {
 
-    List<Device> findByUserId(String Id);
+    List<Device> findByUserId(String id);
 }
