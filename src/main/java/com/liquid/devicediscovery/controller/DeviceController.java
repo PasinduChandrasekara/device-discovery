@@ -32,8 +32,8 @@ public class DeviceController {
     @Autowired
     ModelMapper modelMapper;
 
-    private final String REGISTRATION_URL = "http://localhost:8091/devices/";
-    private final String TOKEN_URL = "http://localhost:8091/devices/register/token";
+    private final String REGISTRATION_URL = "serveo.net:8091/devices/";
+    private final String TOKEN_URL = "serveo.net:8091/devices/register/token";
 
     private static final Type DEVICE_LIST_TYPE = new TypeToken<List<DeviceDto>>() {
     }.getType();
