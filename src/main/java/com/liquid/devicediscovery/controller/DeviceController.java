@@ -1,6 +1,5 @@
 package com.liquid.devicediscovery.controller;
 
-import com.google.zxing.WriterException;
 import com.liquid.devicediscovery.domain.Device;
 import com.liquid.devicediscovery.service.DeviceManagementService;
 import com.liquid.devicediscovery.service.QRCodeService;
@@ -8,7 +7,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,9 +46,7 @@ public class DeviceController {
         byte[] qrCode = null;
         try {
             qrCode = qrCodeService.getQRCodeImage(new JSONObject(), 100, 250);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return qrCode;
